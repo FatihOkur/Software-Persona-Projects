@@ -61,7 +61,7 @@ video,audio{width:100%;border-radius:14px}
   <div class="kick">Yapay Zeka ile İçerik Üretimi · Final Projesi</div>
   <h1>✈ SkyTrack<br><span style="color:var(--amber)">Marka İçerik Sistemi</span></h1>
   <p class="lead">Kurgusal bir seyahat teknolojisi markası olan SkyTrack için, yapay zeka araçlarıyla uçtan uca kurulmuş içerik üretim sistemi. Strateji, marka sesi, 7 günlük takvim ve blog, sosyal medya, görsel, video ve ses formatlarında örnek içerik seti tek sayfada.</p>
-  <div><span class="tag">Prompt Engineering (RTF · CO-STAR)</span><span class="tag">Görsel Üretim</span><span class="tag">Video & Ses</span><span class="tag">Marka Sesi</span><span class="tag">Sorumlu Kullanım</span></div>
+  <div><span class="tag">Prompt Engineering (RTF · CO-STAR)</span><span class="tag">Görsel Üretim (Gemini)</span><span class="tag">Video & Ses</span><span class="tag">Marka Sesi</span><span class="tag">Sorumlu Kullanım</span></div>
   <div class="grid g4" style="margin-top:34px">
     <div class="card"><div class="num">1</div>Marka strateji dokümanı</div>
     <div class="card"><div class="num">7</div>günlük içerik takvimi (Excel)</div>
@@ -289,7 +289,17 @@ Uçuşunu ekle, sayaç başlasın 👉 link biyografide
     <figure style="margin:0"><img class="img" src="medya/gorsel_2_kontrol_listesi.png" alt="Havalimanına çıkmadan önce 5 kontrol listesi"><figcaption class="muted">Görsel 2 · 5 kontrol (Gönderi 2)</figcaption></figure>
     <figure style="margin:0"><img class="img" src="medya/gorsel_3_rotar_nedenleri.png" alt="Rötar neden olur: düşük görüş, önceki uçuş, yoğunluk, hava durumu"><figcaption class="muted">Görsel 3 · Rötar nedenleri (Gönderi 1)</figcaption></figure>
   </div>
-  <div class="card" style="margin-top:18px"><b>Nasıl üretildi?</b> Claude'a marka kimliği kartı ve görsel stil dili verilerek her görsel için HTML/CSS tasarım kodu ürettirildi. Kod, Microsoft Edge (headless) ile 1080×1080 PNG'ye dönüştürüldü (<code>uretim/gorsel_uret.py</code>). Bu yöntemin nedeni: görüntü üretim modellerinde Türkçe metinler sık bozuluyor. Kodla üretim, renk kodlarına %100 sadakat ve hatasız tipografi sağlıyor.</div>
+  <div class="card" style="margin-top:18px"><b>Nasıl üretildi? İki katmanlı iş akışı</b>
+    <ol style="margin:8px 0 0;padding-left:20px">
+      <li><b>Görüntü katmanı · Google Gemini:</b> Marka paletinin HEX kodlarını içeren İngilizce istemlerle (bkz. <a href="#prompt">Prompt Kütüphanesi</a>) <b>metinsiz</b> görseller üretildi. İstemlerde üst kısmın başlık için boş bırakılması istendi.</li>
+      <li><b>Metin katmanı · Claude + HTML/CSS:</b> Görüntü modelleri Türkçe karakterleri (ç, ğ, ı, ş) sıklıkla bozduğu için başlık, logo ve CTA ayrı bir katman olarak kodla bindirildi ve 1080×1080 PNG'ye dönüştürüldü (<code>uretim/gorsel_bindir.py</code>).</li>
+    </ol>
+    <p class="muted" style="margin:10px 0 6px">Gemini'nin ham çıktıları (düzenlenmemiş):</p>
+    <div class="grid g3">
+      <img class="img" src="medya/gemini_ham/gemini_1_rota.jpg" alt="Gemini ham çıktı: gece mavisi zeminde kesikli rota üzerinde amber uçak">
+      <img class="img" src="medya/gemini_ham/gemini_2_bavul.jpg" alt="Gemini ham çıktı: pasaport, biniş kartı ve kontrol listesi içeren açık bavul">
+      <img class="img" src="medya/gemini_ham/gemini_3_pist.jpg" alt="Gemini ham çıktı: alacakaranlıkta sisli pist ve bekleyen uçak">
+    </div></div>
 </section>
 
 <!-- VİDEO & SES -->
@@ -306,7 +316,7 @@ Uçuşunu ekle, sayaç başlasın 👉 link biyografide
         <div class="out">"Uçuşun yaklaşıyor mu? SkyTrack ile tüm uçuşların tek ekranda. Rotanı haritada gör, geri sayımı takip et, hazırlık listeni tamamla. Sen yolculuğa odaklan, gerisini SkyTrack hatırlasın. Daha sakin yolculuklar için: SkyTrack."</div></div>
       <div class="card" style="margin-top:18px"><h3>🎬 Senaryo (sahne planı)</h3>
         <table><tr><th>Süre</th><th>Sahne</th><th>Ses</th></tr>
-        <tr><td>0–3,5 sn</td><td>Kanca: "Uçuşun yaklaşıyor mu?"</td><td>Soru</td></tr>
+        <tr><td>0–3,5 sn</td><td>Kanca: "Uçuşun yaklaşıyor mu?" (Gemini görseli)</td><td>Soru</td></tr>
         <tr><td>3,5–7,5</td><td>Uygulama ekranı (gerçek ürün görüntüsü)</td><td>Tek ekranda</td></tr>
         <tr><td>7,5–12,5</td><td>3 özellik kartı</td><td>Harita · geri sayım · liste</td></tr>
         <tr><td>12,5–18,5</td><td>Logo + CTA "Ücretsiz dene"</td><td>Slogan</td></tr></table>
@@ -325,8 +335,8 @@ Uçuşunu ekle, sayaç başlasın 👉 link biyografide
     <tr><td>Gönderi 1 (Instagram)</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td><td>Yalnızca genel ve bilinen bilgiler kullanıldı; sayı yok.</td></tr>
     <tr><td>Gönderi 2 (LinkedIn/X)</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td><td>Korku dili ("kaçırma!") ve abartı ifadeleri istemde yasaklandı; çıktı marka sesi rehberindeki "kaçın" listesine göre kontrol edildi.</td></tr>
     <tr><td>Gönderi 3 (Instagram)</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td><td>Emoji sınırı (en fazla 3) uygulandı.</td></tr>
-    <tr><td>3 görsel</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td><td>Stok görsel, logo veya gerçek kişi yok. "2.184 km · ~3 sa 13 dk" değeri Haversine formülüyle hesaplandı ve "~" ile tahmin olduğu belirtildi.</td></tr>
-    <tr><td>Video</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td><td>Uygulama görüntüsü kendi ürünümüz; müzik kullanılmadı.</td></tr>
+    <tr><td>3 görsel</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td><td>Gemini çıktıları gerçek havayolu logosu, tanınabilir kişi veya marka içermiyor (kontrol edildi). Her görselde "Görsel: Google Gemini ile üretildi" notu var. Gemini görselleri görünmez SynthID filigranı taşır; ticari kullanımda Google'ın üretken yapay zeka kullanım koşulları kontrol edilmeli.</td></tr>
+    <tr><td>Video</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td><td>1. sahne Gemini görseli, 2. sahne kendi ürünümüzün ekranı; müzik kullanılmadı.</td></tr>
     <tr><td>Seslendirme</td><td class="ok">✓</td><td class="ok">⚠</td><td class="ok">✓</td><td>Sentetik ses portföy/eğitim amaçlı. Ticari yayında Microsoft Azure Speech lisans koşulları kontrol edilmeli ve "yapay zeka ile seslendirilmiştir" notu eklenmeli.</td></tr>
     <tr><td>Rakip analizi</td><td>—</td><td class="ok">✓</td><td class="ok">✓</td><td>Rakip adları yalnızca karşılaştırma için kullanıldı; logo yok, sayısal iddia yok.</td></tr>
   </table></div>
@@ -346,7 +356,8 @@ Uçuşunu ekle, sayaç başlasın 👉 link biyografide
     <tr><td>Marka analizi, ses rehberi, personalar</td><td>Claude</td><td>Uzun Türkçe metinde tutarlı ton, yapılandırılmış çıktı</td><td>Rakipler hakkında uydurma sayısal iddia riski → "yalnızca genel konumlandırma, sayı yok" kısıtı</td></tr>
     <tr><td>Blog yazısı</td><td>Claude (CO-STAR)</td><td>SEO yapısı ve marka sesi tek istemde verilebiliyor</td><td>Kaynaksız istatistik riski → istemde yasaklandı, çıktı tarandı; mevzuat yalnızca adıyla anıldı</td></tr>
     <tr><td>Sosyal medya metinleri</td><td>Claude (RTF)</td><td>Kanal başına biçim ve uzunluk kontrolü</td><td>Korku dili ve emoji fazlalığı riski → marka sesi rehberi bağlam olarak verildi, emoji sınırı konuldu</td></tr>
-    <tr><td>Görseller</td><td>Claude (HTML/CSS kodu) + Edge headless</td><td>Türkçe metinli görsellerde hatasız yazım, birebir marka renkleri</td><td>Emoji görünümü platforma göre değişebilir → yalnızca dekoratif kullanıldı</td></tr>
+    <tr><td>Görseller (görüntü)</td><td>Google Gemini</td><td>Marka paletine uygun, özgün illüstrasyon ve atmosfer görselleri</td><td>Türkçe metnin bozulması riski → görseller metinsiz istendi; marka/havayolu logosu üretimi istemde yasaklandı</td></tr>
+    <tr><td>Görseller (metin katmanı)</td><td>Claude (HTML/CSS kodu) + Edge headless</td><td>Hatasız Türkçe tipografi, birebir marka renkleri</td><td>Arka planda okunurluk → üstten koyulaşan geçiş katmanı eklendi</td></tr>
     <tr><td>Seslendirme</td><td>Microsoft Edge Neural TTS (edge-tts)</td><td>Doğal Türkçe nöral ses, ücretsiz erişim</td><td>Süre sınırı (15–20 sn) → metin 40 kelime civarında tutuldu, hız +%4; sonuç 18 sn</td></tr>
     <tr><td>Video montajı</td><td>ffmpeg (betik Claude ile yazıldı)</td><td>Tekrarlanabilir, kodla üretilen video akışı</td><td>Ses ile görüntünün kayması → sahne süreleri seslendirme cümlelerine göre planlandı</td></tr>
     <tr><td>İçerik takvimi</td><td>Claude + openpyxl</td><td>Personaya bağlı gerekçeler ve Excel çıktısı</td><td>Kanıtsız "en iyi paylaşım saati" iddiası riski → saatler "test edilecek varsayım" olarak etiketlendi</td></tr>
@@ -364,10 +375,12 @@ S (Style): Sade, bilgilendirici; H2 alt başlıklar; 4 neden + 5 öneri yapısı
 T (Tone): Sakin, güven veren, "sen" dili; korku dili yok.
 A (Audience): Yılda birkaç kez uçan 20–40 yaş yolcular.
 R (Response): SEO başlığı (≤60 karakter), meta açıklama, anahtar kelimeler, 500–650 kelimelik yazı. Doğrulayamadığın istatistik verme; mevzuat adı geçiyorsa resmî adını yaz.</div></div>
-    <div class="card"><h3>Görsel · tasarım istemi</h3><div class="prompt">Rol: Marka tasarımcısısın.
-Görev: 1080×1080 Instagram görseli için tek dosyalık HTML/CSS yaz.
-Kısıtlar: Zemin #0B1F3A → #163a6b radyal ışık (sağ üst); vurgu yalnızca #FFB547; kartlar 28px köşe; Segoe UI 800 başlık; sol üstte ✈ logo + "SkyTrack"; altta "skytrack ↗"; en fazla 25 kelime metin; stok görsel/logo kullanma.
-İçerik: "Rötar neden olur?" + 4 faktör kartı (ikon, başlık, 1 satır açıklama).</div></div>
+    <div class="card"><h3>Görsel 1 · Gemini (geri sayım)</h3><div class="prompt">Minimalist flat illustration, square 1:1. A small airplane flying along a curved dashed route line over a deep navy night sky (#0B1F3A), soft glow from top right. Accent color warm amber (#FFB547) on the airplane and route, light sky blue (#5AC8FA) details. Calm, clean, modern travel-app style. Large empty space in the upper half for text. No text, no letters, no logos.</div></div>
+    <div class="card"><h3>Görsel 2 · Gemini (kontrol listesi)</h3><div class="prompt">Flat vector illustration, square 1:1. Top-down view of an open travel suitcase with a passport, a smartphone showing a boarding pass, a charger and a small checklist with green check marks (#34C77B). Deep navy background (#0B1F3A), amber (#FFB547) accents, soft shadows, rounded shapes. Calm and organized mood. Empty space at the top for a headline. No text, no letters, no logos.</div></div>
+    <div class="card"><h3>Görsel 3 · Gemini (rötar nedenleri)</h3><div class="prompt">Atmospheric digital illustration, square 1:1. An airport runway at dusk covered in light fog, a passenger airplane waiting near the gate, runway lights glowing warm amber (#FFB547), deep navy sky (#0B1F3A) with soft blue haze (#5AC8FA). Calm, cinematic, slightly mysterious mood, not dramatic or scary. Empty sky area at the top for text. No text, no letters, no logos, no airline branding.</div></div>
+    <div class="card"><h3>Metin katmanı · Claude</h3><div class="prompt">Rol: Marka tasarımcısısın.
+Görev: Verilen 1024×1024 görselin üzerine 1080×1080 Instagram gönderisi için HTML/CSS metin katmanı yaz.
+Kısıtlar: Üstten koyulaşan geçiş (okunurluk için); vurgu yalnızca #FFB547; Segoe UI 800 başlık; sol üstte ✈ logo + "SkyTrack"; altta CTA; en fazla 15 kelime; görselin ana nesnesinin üstüne metin koyma.</div></div>
     <div class="card"><h3>Video senaryosu</h3><div class="prompt">15–20 sn dikey tanıtım videosu için 4 sahnelik senaryo ve seslendirme metni yaz. Sahne 1 soru ile kanca; 2 ürün ekranı; 3 üç fayda; 4 logo + CTA. Seslendirme 40–45 kelimeyi geçmesin, marka sloganı "Sen yolculuğa odaklan, gerisini SkyTrack hatırlasın" ile bitsin.</div></div>
     <div class="card"><h3>İçerik takvimi</h3><div class="prompt">4 içerik sütunu ve 2 personaya göre 7 günlük takvim oluştur. Sütunlar: gün, saat, kanal, format, sütun, konu, hedef kitle gerekçesi, CTA. Her gün farklı format olsun; blog Pazartesi, video Çarşamba. Paylaşım saatleri için genel "en iyi saat" istatistiği kullanma; gerekçeyi persona rutinine dayandır.</div></div>
   </div>
