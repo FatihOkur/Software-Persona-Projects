@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Basitleştirilmiş Python — Proje Envanteri</title>
+<style>
+  @page { size: A4; margin: 16mm 16mm 18mm 16mm;
+    @bottom-left { content: "Fatih Okur · Yapay Zeka İçin Basitleştirilmiş Python — Proje Envanteri"; font: 8pt 'Segoe UI', sans-serif; color: #7a8599; }
+    @bottom-right { content: counter(page) " / " counter(pages); font: 8pt 'Segoe UI', sans-serif; color: #7a8599; } }
+  :root { --navy:#1F3A5F; --green:#6BAA3E; --orange:#E4572E; --ink:#1d2433; --muted:#5b6578; --line:#d9dee7; --soft:#f3f6fa; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Calibri, Arial, sans-serif; color: var(--ink); font-size: 10pt; line-height: 1.45; margin: 0; }
+  .cover { border-top: 6px solid var(--navy); padding: 14px 0 10px; margin-bottom: 8px; }
+  .kicker { color: var(--muted); font-size: 9pt; letter-spacing: .08em; text-transform: uppercase; }
+  h1 { color: var(--navy); font-size: 19pt; margin: 4px 0 2px; line-height: 1.2; }
+  .sub { color: var(--muted); font-size: 11pt; margin: 0 0 10px; }
+  .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 9pt; }
+  .meta b { color: var(--navy); display: block; font-size: 8pt; text-transform: uppercase; letter-spacing: .05em; }
+  .meta a { color: var(--navy); word-break: break-all; }
+  h2 { color: var(--navy); font-size: 14pt; margin: 18px 0 6px; padding-bottom: 3px; border-bottom: 2px solid var(--navy); }
+  h3 { color: var(--green); font-size: 11.5pt; margin: 14px 0 4px; break-after: avoid; }
+  h2 { break-after: avoid; } .out { break-after: avoid; } tr { break-inside: avoid; }
+  h4 { color: var(--navy); font-size: 10pt; margin: 8px 0 3px; }
+  p { margin: 4px 0 6px; }
+  ul { margin: 3px 0 6px; padding-left: 18px; } li { margin: 2px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 8px; font-size: 9pt; }
+  th { background: var(--navy); color: #fff; text-align: left; padding: 4px 6px; font-weight: 600; }
+  td { border: 1px solid var(--line); padding: 4px 6px; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafbfd; }
+  .kv td:first-child { width: 28%; font-weight: 600; color: var(--navy); background: var(--soft); }
+  .fig { text-align: center; margin: 6px 0 4px; break-inside: avoid; }
+  .fig img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
+  .fig .cap { font-size: 8.5pt; color: var(--muted); margin-top: 2px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+  .box { border-left: 4px solid var(--green); background: #f4f9ef; padding: 6px 10px; margin: 6px 0; border-radius: 0 6px 6px 0; break-inside: avoid; }
+  .box.warn { border-color: var(--orange); background: #fdf1ed; }
+  .out { font-weight: 600; color: var(--green); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; margin-top: 6px; }
+  pre { background: #0f1b2d; color: #e6edf7; padding: 8px 10px; border-radius: 6px; font: 8.3pt/1.4 Consolas, monospace; white-space: pre-wrap; margin: 4px 0 8px; break-inside: avoid; }
+  .kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 0; }
+  .kpi div { border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; text-align: center; }
+  .kpi b { display: block; font-size: 16pt; color: var(--navy); }
+  .kpi span { font-size: 8pt; color: var(--muted); }
+  .pb { break-before: page; }
+  .stage { break-inside: auto; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Yapay Zeka İçin Basitleştirilmiş Python — Proje Envanteri</div>
+  <h1>Uçtan Uca Yapay Zeka Projesi: Veriden Tahmine<br>✈ Uçuş Rötar Tahmini</h1>
+  <p class="sub">Uçuş bilgilerinden 15 dakikayı aşan rötarı tahmin eden karar ağacı modeli ve "Akıllı Rötar Asistanı" mini uygulaması</p>
+  <div class="meta">
+    <div><b>Hazırlayan</b>Fatih Okur</div>
+    <div><b>Program</b>Software Persona Yapay Zeka Mesleki Gelişim Programı</div>
+    <div><b>Teslim tarihi</b>16.11.2026</div>
+    <div style="grid-column: span 3"><b>Colab not defteri</b><a href="https://colab.research.google.com/github/FatihOkur/Software-Persona-Projects/blob/main/01-Basitlestirilmis-Python/ucus_rotar_tahmini.ipynb">colab.research.google.com/github/FatihOkur/Software-Persona-Projects/blob/main/01-Basitlestirilmis-Python/ucus_rotar_tahmini.ipynb</a></div>
+    <div style="grid-column: span 3"><b>GitHub (kod + veri)</b><a href="https://github.com/FatihOkur/Software-Persona-Projects/tree/main/01-Basitlestirilmis-Python">github.com/FatihOkur/Software-Persona-Projects/tree/main/01-Basitlestirilmis-Python</a></div>
+  </div>
+</div>
+
+<h2>1. Projenin Genel Tanımı</h2>
+<table class="kv">
+  <tr><td>Proje Adı</td><td>Uçtan Uca Yapay Zeka Projesi: Veriden Tahmine — Uçuş Rötar Tahmini</td></tr>
+  <tr><td>Amaç</td><td>Eğitim boyunca öğrenilen Python, veri işleme ve makine öğrenmesi becerilerini tek projede birleştirmek; havacılıktan seçilen gerçekçi bir problemde veriden yola çıkıp tahmin yapan, çalışan bir yapay zeka uygulaması geliştirmek. Analitik düşünme ve problem çözme becerilerini somut bir senaryo üzerinde geliştirmek.</td></tr>
+  <tr><td>Kapsam</td><td>Problem tanımı → veri oluşturma ve temizleme → keşif ve görselleştirme → model kurma ve eğitme → değerlendirme → mini uygulama → dokümantasyon</td></tr>
+  <tr><td>Araçlar</td><td>Python 3, Google Colab, Pandas, NumPy, Matplotlib, scikit-learn (DecisionTreeClassifier, train_test_split, cross_val_score, accuracy_score)</td></tr>
+  <tr><td>Teslim edilenler</td><td>Colab not defteri (yorumlu, çıktılı) · <code>ucus_rotar_verisi.csv</code> (161 satır) · 6 etiketli grafik · 5 slaytlık sunum (PPTX) · bu envanter ve 1 sayfalık proje raporu</td></tr>
+</table>
+
+<h2>2. Proje Aşamaları ve Çıktılar</h2>
+
+<div class="stage">
+<h3>Aşama 1: Problem Tanımı ve Proje Planı</h3>
+<p><b>Yapılanlar:</b> İlgi alanım olan havacılık seçildi. Tahmin edilebilir somut soru yazıldı, çıktı türü (sınıflandırma) belirlendi ve tahminin kime fayda sağlayacağı gerekçelendirildi.</p>
+<div class="out">Çıktı — Proje Tanım Formu</div>
+<table class="kv">
+  <tr><td>Problem cümlesi</td><td>Bir uçuşun <i>kalkış saati, günü, hava durumu, rüzgâr hızı, görüş mesafesi, havalimanı yoğunluğu, önceki uçuşun gecikmesi ve mesafe</i> bilgilerinden, uçuşun <b>15 dakikadan fazla rötar yapıp yapmayacağını</b> tahmin et.</td></tr>
+  <tr><td>Hedef değişken</td><td><code>rotar</code> → 1 = Rötarlı (&gt;15 dk), 0 = Zamanında</td></tr>
+  <tr><td>Problem türü</td><td>Sınıflandırma (ikili)</td></tr>
+</table>
+<div class="out">Çıktı — Gerekçe paragrafı</div>
+<p>Rötarlar yolcular için kaçırılan aktarmalar ve zaman kaybı, havayolları için ise yakıt, mürettebat ve tazminat maliyeti demektir. Uçuştan saatler önce bilinebilen birkaç bilgiyle rötar riskini tahmin eden basit bir model; <b>yolcuya</b> erken bilgilendirme, <b>operasyon ekibine</b> yedek uçak/mürettebat planlama ve <b>havalimanına</b> kapı/pist planlama için zaman kazandırır.</p>
+</div>
+
+<div class="stage">
+<h3>Aşama 2: Veri Toplama ve Hazırlama</h3>
+<p><b>Yapılanlar:</b> Rötarı etkilediği bilinen faktörlerden yola çıkılarak Python ile <b>161 satırlık bir simülasyon veri seti</b> oluşturuldu (<code>veri_olustur.py</code>). Gerçek bir havayolu verisi değildir ve kişisel veri içermez. Temizleme adımlarını uygulayabilmek için veriye bilinçli olarak 6 eksik değer, 1 sensör hatası ve 1 tekrar eden satır eklendi. CSV dosyası <code>pd.read_csv</code> ile okundu; <code>isnull</code>, <code>duplicated</code>, <code>fillna</code> ve <code>dropna</code> ile temizlendi.</p>
+<div class="out">Çıktı — Veri sözlüğü (161 satır, 8 özellik + 1 hedef + 1 kimlik)</div>
+<table>
+  <tr><th>Sütun</th><th>Tip</th><th>Rol</th><th>Anlamı</th></tr>
+  <tr><td>ucus_no</td><td>metin</td><td>kimlik</td><td>Uçuş numarası (modelde kullanılmaz)</td></tr>
+  <tr><td>gun</td><td>kategorik</td><td>özellik (X)</td><td>Haftanın günü (Pzt–Paz)</td></tr>
+  <tr><td>kalkis_saati</td><td>sayısal</td><td>özellik (X)</td><td>Planlanan kalkış saati (5–23)</td></tr>
+  <tr><td>hava_durumu</td><td>kategorik</td><td>özellik (X)</td><td>Açık / Bulutlu / Yağmurlu / Sisli / Karlı</td></tr>
+  <tr><td>ruzgar_hizi</td><td>sayısal</td><td>özellik (X)</td><td>Rüzgâr hızı (knot)</td></tr>
+  <tr><td>gorus_mesafesi</td><td>sayısal</td><td>özellik (X)</td><td>Görüş mesafesi (km)</td></tr>
+  <tr><td>havalimani_yogunlugu</td><td>sayısal</td><td>özellik (X)</td><td>O saatteki planlı kalkış sayısı</td></tr>
+  <tr><td>onceki_ucus_rotari</td><td>sayısal</td><td>özellik (X)</td><td>Aynı uçağın önceki uçuşundaki gecikme (dk)</td></tr>
+  <tr><td>mesafe_km</td><td>sayısal</td><td>özellik (X)</td><td>Uçuş mesafesi (km)</td></tr>
+  <tr><td><b>rotar</b></td><td>kategorik</td><td><b>hedef (y)</b></td><td>1 = Rötarlı, 0 = Zamanında</td></tr>
+</table>
+<div class="out">Çıktı — Temizleme adımları</div>
+<table>
+  <tr><th>Tespit</th><th>Uygulanan işlem</th><th>Gerekçe</th></tr>
+  <tr><td>1 tekrar eden satır</td><td><code>drop_duplicates()</code></td><td>Aynı uçuşun iki kez sayılması modeli yanıltır</td></tr>
+  <tr><td>1 negatif rüzgâr değeri (−5)</td><td>NaN'a çevrildi</td><td>Fiziksel olarak imkânsız, sensör hatası</td></tr>
+  <tr><td>4 eksik rüzgâr hızı</td><td><code>fillna(median)</code></td><td>Medyan, aykırı değerlere ortalamadan daha dayanıklı</td></tr>
+  <tr><td>2 eksik görüş mesafesi</td><td>Aynı hava durumundaki uçuşların medyanı ile dolduruldu</td><td>Görüş, hava durumuna güçlü biçimde bağlı</td></tr>
+  <tr><td>1 eksik hava durumu</td><td><code>dropna(subset=...)</code></td><td>Kategorik bilgiyi tahminle doldurmak yanıltıcı olur</td></tr>
+</table>
+<p><b>Sonuç:</b> 161 → <b>159 satır, 0 eksik değer.</b> Temiz veri <code>ucus_rotar_verisi_temiz.csv</code> olarak kaydedildi.</p>
+</div>
+
+<div class="stage">
+<h3>Aşama 3: Keşifçi Veri Analizi (EDA) ve Görselleştirme</h3>
+<p><b>Yapılanlar:</b> Veri <code>head()</code>, <code>shape</code> ve <code>describe()</code> ile özetlendi. <code>value_counts</code> ile hedef dağılımı (102 zamanında / 57 rötarlı, genel rötar oranı %35,8), <code>groupby</code> ile hava durumu ve hedef bazında farklar incelendi. Başlıklı ve eksen etiketli 3 keşif grafiği çizildi.</p>
+<div class="out">Çıktı — groupby özeti: hava durumuna göre</div>
+<table>
+  <tr><th>Hava durumu</th><th>Uçuş sayısı</th><th>Rötar oranı</th><th>Ort. görüş (km)</th><th>Ort. rüzgâr (kt)</th></tr>
+  <tr><td>Karlı</td><td>13</td><td><b>%100</b></td><td>2,3</td><td>22,1</td></tr>
+  <tr><td>Sisli</td><td>15</td><td><b>%80</b></td><td>1,1</td><td>3,5</td></tr>
+  <tr><td>Yağmurlu</td><td>32</td><td>%62</td><td>5,2</td><td>19,3</td></tr>
+  <tr><td>Bulutlu</td><td>42</td><td>%17</td><td>8,1</td><td>12,2</td></tr>
+  <tr><td>Açık</td><td>57</td><td>%9</td><td>9,1</td><td>7,8</td></tr>
+</table>
+<div class="row">
+  <div class="fig"><img src="../grafikler/1_hava_durumu_rotar.png"><div class="cap">Grafik 1 — Hava durumuna göre rötar oranı (çubuk)</div></div>
+  <div class="fig"><img src="../grafikler/2_gorus_onceki_rotar.png"><div class="cap">Grafik 2 — Görüş mesafesi × önceki uçuş gecikmesi (dağılım)</div></div>
+</div>
+<div class="row">
+  <div class="fig"><img src="../grafikler/3_saat_dilimi_rotar.png"><div class="cap">Grafik 3 — Kalkış saat dilimine göre rötar oranı</div></div>
+  <div>
+    <div class="out">Çıktı — Keşif Bulguları</div>
+    <ul>
+      <li><b>Hava durumu en güçlü ayrıştırıcı:</b> karda %100, siste %80, yağmurda %62 rötar; açık havada yalnızca %9.</li>
+      <li><b>Görüş mesafesi belirleyici:</b> rötarlılarda ortalama 3,8 km, zamanındakilerde 8,4 km.</li>
+      <li><b>Zincirleme gecikme:</b> önceki uçuş gecikmesi rötarlılarda 12,8 dk, zamanındakilerde 8,2 dk.</li>
+      <li><b>Akşam (17–20) riskli:</b> rötar oranı %53, sabah %27; yoğunluk da daha yüksek (26,5'e karşı 21,9).</li>
+      <li><b>Yanıltıcı ilişki:</b> rötarlıların mesafesi daha kısa görünüyor (878'e karşı 1.177 km). Ancak mesafenin gerçek etkisi yok; korelasyon nedensellik değildir.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<div class="stage">
+<h3>Aşama 4: Model Kurma ve Eğitme</h3>
+<p><b>Yapılanlar:</b> Kategorik sütunlar sayıya çevrildi; hava durumu olumsuzluk sırasına göre kodlandı (Açık=0 … Karlı=4). Özellikler (X) ve hedef (y) ayrıldı. Veri <code>stratify</code> ile %75 eğitim ve %25 test olarak bölündü. Ağaç derinliği <b>test verisine bakmadan</b>, eğitim verisinde 5×10 tekrarlı çapraz doğrulama ile seçildi; ardından model eğitildi.</p>
+<pre># Özellik / hedef ayrımı ve bölme
+X = model_veri[OZELLIKLER]; y = model_veri["rotar"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
+# X_train: (119, 8) | X_test: (40, 8) | y_train: (119,) | y_test: (40,)
+
+model = DecisionTreeClassifier(max_depth=3, min_samples_leaf=5, random_state=42)
+model.fit(X_train, y_train)          # Ağaç derinliği: 3 | Yaprak sayısı: 8</pre>
+<div class="row">
+  <div>
+    <div class="out">Çıktı — Model seçim gerekçesi</div>
+    <p>Hedef iki sınıflı olduğu için sınıflandırma modeli gerekir. <b>DecisionTreeClassifier</b>, "görüş 3 km'den azsa → rötar" gibi <b>insanın okuyabildiği kurallar</b> öğrenir. Böylece operasyon ekibine kararın nedenini açıklamak kolaylaşır. Ölçeklendirme gerektirmez ve doğrusal olmayan ilişkileri yakalar.</p>
+    <p>Çapraz doğrulama skorları tüm derinliklerde %81–82 bandında kaldı. Derin ağaçlar yalnızca eğitim verisini ezberledi. Bu yüzden en iyi CV skoruna eşit olan sığ ağaç (derinlik 3) seçildi.</p>
+    <div class="out">Çıktı — Eğitim/test boyutları</div>
+    <p>X_train (119, 8) · X_test (40, 8) · y_train (119,) · y_test (40,)</p>
+  </div>
+  <div class="fig"><img src="../grafikler/4_derinlik_asiri_ogrenme.png"><div class="cap">Grafik 4 — Ağaç derinliği: eğitim ve çapraz doğrulama doğruluğu</div></div>
+</div>
+</div>
+
+<div class="stage">
+<h3>Aşama 5: Tahmin ve Değerlendirme</h3>
+<p><b>Yapılanlar:</b> Test verisinde <code>model.predict</code> ile tahmin yapıldı. Başarı <code>accuracy_score</code> ve <code>model.score</code> ile ölçülüp basit bir temel tahminle karşılaştırıldı. Karmaşıklık matrisi ve özellik önemleri incelendi, 4 yeni uçuş için tahmin üretildi.</p>
+<div class="kpi">
+  <div><b>%82,5</b><span>Test doğruluğu</span></div>
+  <div><b>%89,1</b><span>Eğitim doğruluğu</span></div>
+  <div><b>%65,0</b><span>Temel tahmin (hep "zamanında")</span></div>
+  <div><b>%71</b><span>Rötarlıları yakalama (10/14)</span></div>
+</div>
+<div class="row">
+  <div>
+    <div class="out">Çıktı — Karmaşıklık matrisi (test, 40 uçuş)</div>
+    <table>
+      <tr><th></th><th>Tahmin: Zamanında</th><th>Tahmin: Rötarlı</th></tr>
+      <tr><td><b>Gerçek: Zamanında</b></td><td>23 ✔</td><td>3 ✘</td></tr>
+      <tr><td><b>Gerçek: Rötarlı</b></td><td>4 ✘</td><td>10 ✔</td></tr>
+    </table>
+    <div class="out">Çıktı — Yeni örnekler için tahmin tablosu</div>
+    <table>
+      <tr><th>Girdi</th><th>Tahmin</th></tr>
+      <tr><td>Salı 07:00, açık, 6 kt, görüş 10 km, önceki rötar 0 dk</td><td>Zamanında</td></tr>
+      <tr><td>Cuma 18:00, yağmurlu, 22 kt, görüş 4,5 km, yoğunluk 40</td><td><b>Rötarlı</b></td></tr>
+      <tr><td>Perşembe 06:00, sisli, görüş 0,8 km, önceki rötar 25 dk</td><td><b>Rötarlı</b></td></tr>
+      <tr><td>Çarşamba 13:00, bulutlu, 11 kt, görüş 8 km</td><td>Zamanında</td></tr>
+    </table>
+  </div>
+  <div class="fig"><img src="../grafikler/5_ozellik_onemi.png"><div class="cap">Grafik 5 — Özellik önemi (görüş mesafesi %89)</div></div>
+</div>
+<div class="box warn">
+  <b>Değerlendirme Notu — Model güvenilir mi?</b>
+  <ul>
+    <li><b>Başarı:</b> Model, "her uçuş zamanında" diyen basit tahminden 17,5 puan daha iyi. Eğitim ile test arasındaki 6,6 puanlık fark makul; aşırı öğrenme sınırlı.</li>
+    <li><b>Hatalar:</b> 4 rötarlı uçuş kaçırıldı (yanlış negatif). Yolcu açısından kaçırılan rötar, yanlış alarmdan daha maliyetli olduğu için ilk iyileştirilecek nokta bu.</li>
+    <li><b>Sınırlılıklar:</b> Test kümesi 40 uçuş; her hata doğruluğu 2,5 puan değiştiriyor (CV std ±%5). Model kararının %89'unu görüş mesafesine dayandırıyor. Yapraklar saf olduğu için olasılıklar %0/%100 gibi aşırı kesin çıkıyor. Veri simülasyon olduğundan bu sonuçlar gerçek havalimanı verisi için garanti değil.</li>
+    <li><b>İyileştirme:</b> Gerçek veri (ABD BTS On-Time Performance, METAR hava raporları), Random Forest, <code>class_weight="balanced"</code> ve olasılık kalibrasyonu.</li>
+  </ul>
+</div>
+<div class="fig"><img src="../grafikler/6_karar_agaci.png" style="max-height: 300px"><div class="cap">Grafik 6 — Öğrenilen karar ağacı (okunabilir kurallar)</div></div>
+</div>
+
+<div class="stage">
+<h3>Aşama 6: Akıllı Tahmin Aracı (Mini Uygulama)</h3>
+<p><b>Yapılanlar:</b> Modelin çıktısını okunur bir cümleye çeviren <code>tahmin_et()</code> fonksiyonu yazıldı. Risk; DÜŞÜK, ORTA veya YÜKSEK olarak sınıflandırılıp yolcuya öneri veriliyor. <code>ucus_asistani()</code> fonksiyonu kullanıcıdan <code>input()</code> ile 8 bilgi alıp anında tahmin üretiyor ve sonucu f-string ile yazdırıyor.</p>
+<pre>def tahmin_et(kalkis_saati, gun, hava_durumu, ruzgar_hizi, gorus_mesafesi,
+              havalimani_yogunlugu, onceki_ucus_rotari, mesafe_km):
+    ...
+    olasilik = model.predict_proba(satir)[0, 1] * 100
+    return (f"✈ {gun} günü saat {kalkis_saati:02d}:00 kalkışlı, {hava_durumu.lower()} havadaki uçuşunuz için "
+            f"rötar riski %{olasilik:.0f} → {seviye}. {oneri}")</pre>
+<div class="out">Çıktı — Örnek çalıştırma</div>
+<pre>=== SkyTrack Rötar Asistanı ===
+Kalkış saati: 19 | Gün: Paz | Hava: Karlı | Rüzgâr: 25 kt | Görüş: 2.0 km | Yoğunluk: 38 | Önceki rötar: 15 dk
+
+✈ Paz günü saat 19:00 kalkışlı, karlı havadaki uçuşunuz için rötar riski %100 → YÜKSEK.
+  Aktarmanız varsa havayolunuzla iletişime geçin ve alternatif planlayın.
+✈ Sal günü saat 07:00 kalkışlı, açık havadaki uçuşunuz için rötar riski %0 → DÜŞÜK.
+  Uçuşunuzun zamanında kalkması bekleniyor. İyi yolculuklar!</pre>
+</div>
+
+<div class="stage">
+<h3>Aşama 7: Dokümantasyon (Teslim)</h3>
+<ul>
+  <li><b>Sunum dosyası:</b> 5 slayt (problem, veri, yöntem, sonuç, mini uygulama); en önemli grafik olan hava durumu ve rötar ilişkisi sunumda yer alıyor.</li>
+  <li><b>Kısa proje raporu:</b> Bir sonraki sayfada (1 sayfa).</li>
+  <li><b>Colab not defteri:</b> 41 hücre, her aşama başlıklı ve yorumlu; çıktılar kayıtlı. Veri GitHub'dan otomatik okunduğu için "Tümünü çalıştır" ile baştan sona çalışır.</li>
+</ul>
+</div>
+
+<h2>3. Kısa Proje Raporu</h2>
+<table class="kv">
+  <tr><td>Problem</td><td>Havacılıkta rötarlar yolculara ve havayollarına ciddi zaman ve maliyet kaybı yaşatır. Bu projede bir uçuşun 15 dakikayı aşan rötar yapıp yapmayacağı, uçuş öncesinde bilinebilen 8 bilgiden tahmin edildi (ikili sınıflandırma).</td></tr>
+  <tr><td>Veri</td><td>Rötarı etkilediği bilinen faktörlerle (hava durumu, rüzgâr, görüş, yoğunluk, önceki uçuş gecikmesi, saat) Python'da üretilen 161 satırlık simülasyon veri seti. Temizlik (tekrar eden satır, sensör hatası, eksik değerler) sonrasında 159 satır kaldı. Rötar oranı %35,8.</td></tr>
+  <tr><td>Yöntem</td><td>Pandas ile temizleme ve groupby/value_counts analizleri, Matplotlib ile 6 grafik. Kategorik kodlama ve %75/%25 stratified bölme. Derinliği çapraz doğrulamayla seçilen <b>DecisionTreeClassifier</b> (max_depth=3, min_samples_leaf=5).</td></tr>
+  <tr><td>Sonuç</td><td>Test doğruluğu <b>%82,5</b> (temel tahmin %65). 14 rötarlı uçuşun 10'u yakalandı, 26 zamanında uçuşun 23'ü doğru bilindi. Modelin en önemli özelliği görüş mesafesi (%89), ardından kalkış saati (%7). Model, sonucu yolcuya anlamlı bir cümleyle bildiren etkileşimli bir asistana dönüştürüldü.</td></tr>
+  <tr><td>Çıkarım</td><td>Kötü görüş (sis, kar, yağmur) ve akşam saatlerindeki yoğunluk rötarın en güçlü habercileri. Basit ve açıklanabilir bir karar ağacı bile anlamlı bir erken uyarı sağlayabiliyor. Gerçek kullanım için gerçek uçuş ve METAR verisiyle yeniden eğitilmeli, kaçırılan rötarları azaltmak için sınıf ağırlıkları ayarlanmalı. Projeden çıkardığım en önemli ders: yüksek doğruluk tek başına yeterli değil; modelin <i>neden</i> karar verdiğini ve <i>nerede</i> hata yaptığını dürüstçe raporlamak gerekir.</td></tr>
+</table>
+<div class="fig"><img src="../grafikler/1_hava_durumu_rotar.png" style="max-width: 55%"><div class="cap">Projenin en önemli grafiği — Hava durumuna göre rötar oranı</div></div>
+
+<h2>4. Beklenen Sonuçlar — Kazanımlar</h2>
+<table>
+  <tr><th>Beklenen sonuç</th><th>Bu projedeki karşılığı</th></tr>
+  <tr><td>Kendi seçtiği bir problemi uçtan uca çözen, çalışan bir yapay zeka uygulaması</td><td>Uçuş rötar tahmini; veriden tahmine ve etkileşimli asistana kadar tamamlandı ✔</td></tr>
+  <tr><td>Ham veriden anlamlı bilgiye ulaşma (temizleme, keşif, görselleştirme)</td><td>5 tür veri sorunu temizlendi; 5 bulgu ve 6 grafik üretildi ✔</td></tr>
+  <tr><td>Model eğitme, tahmin üretme ve başarıyı dürüstçe ölçme</td><td>Temel tahminle kıyas, çapraz doğrulama, karmaşıklık matrisi ve sınırlılık analizi ✔</td></tr>
+  <tr><td>Teknik sonucu sade ve anlaşılır sunma</td><td>5 slaytlık sunum ve 1 sayfalık rapor ✔</td></tr>
+  <tr><td>Portföye eklenebilir, paylaşılabilir ilk proje</td><td>GitHub deposu ve Colab bağlantısı ile herkese açık ✔</td></tr>
+</table>
+
+</body>
+</html>

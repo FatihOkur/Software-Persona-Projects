@@ -1,0 +1,7 @@
+node_modules/
+dist/
+__pycache__/
+.ipynb_checkpoints/
+03-Yapay-Zeka-ile-Icerik-Uretimi/uretim/_html/
+03-Yapay-Zeka-ile-Icerik-Uretimi/uretim/_sahneler/
+.claude/

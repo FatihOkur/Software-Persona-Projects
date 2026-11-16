@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Kestirimci Bakım — Proje Raporu</title>
+<style>
+  @page { size: A4; margin: 15mm 15mm 17mm 15mm;
+    @bottom-left { content: "Fatih Okur · Makine ve Derin Öğrenme Uygulamaları — Proje Raporu"; font: 8pt 'Segoe UI', sans-serif; color: #7a8599; }
+    @bottom-right { content: counter(page) " / " counter(pages); font: 8pt 'Segoe UI', sans-serif; color: #7a8599; } }
+  :root { --navy:#1F4E79; --blue:#2E75B6; --orange:#E4572E; --ink:#1d2433; --muted:#5b6578; --line:#d9dee7; --soft:#f2f6fb; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Calibri, Arial, sans-serif; color: var(--ink); font-size: 9.8pt; line-height: 1.42; margin: 0; }
+  .cover { border-top: 6px solid var(--navy); padding-top: 12px; }
+  .kicker { color: var(--muted); font-size: 8.5pt; letter-spacing: .08em; text-transform: uppercase; }
+  h1 { color: var(--navy); font-size: 19pt; margin: 4px 0 4px; line-height: 1.2; }
+  .sub { color: var(--muted); font-size: 10.5pt; margin: 0 0 8px; }
+  .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px; background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 8.8pt; }
+  .meta b { color: var(--navy); }
+  .meta a { color: var(--blue); word-break: break-all; }
+  h2 { color: var(--navy); font-size: 13pt; margin: 14px 0 5px; padding-bottom: 2px; border-bottom: 2px solid var(--navy); break-after: avoid; }
+  h3 { color: var(--blue); font-size: 10.5pt; margin: 9px 0 3px; break-after: avoid; }
+  p { margin: 3px 0 6px; text-align: justify; }
+  ul { margin: 2px 0 6px; padding-left: 17px; } li { margin: 1.5px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 5px 0 7px; font-size: 8.8pt; }
+  th { background: var(--navy); color: #fff; text-align: left; padding: 3px 6px; font-weight: 600; }
+  td { border: 1px solid var(--line); padding: 3px 6px; vertical-align: top; }
+  tr { break-inside: avoid; }
+  tr.best td { background: #eaf4ea; font-weight: 600; }
+  .fig { text-align: center; margin: 4px 0; break-inside: avoid; }
+  .fig img { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; }
+  .cap { font-size: 8pt; color: var(--muted); margin-top: 1px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+  .box { border-left: 4px solid var(--blue); background: var(--soft); padding: 5px 10px; margin: 6px 0; border-radius: 0 6px 6px 0; break-inside: avoid; }
+  .box.warn { border-color: var(--orange); background: #fdf1ed; }
+  .chk { columns: 2; font-size: 9pt; } .chk li { list-style: none; margin-left: -16px; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Makine ve Derin Öğrenme Uygulamaları — Proje Raporu</div>
+  <h1>Kestirimci Bakım: Sensör Verisinden Makine Arızası Tahmini</h1>
+  <p class="sub">Lojistik Regresyon, Random Forest ve PyTorch Yapay Sinir Ağı (MLP) karşılaştırması · Dengesiz veride sınıflandırma</p>
+  <div class="meta">
+    <div><b>Hazırlayan:</b> Fatih Okur</div>
+    <div><b>Tarih:</b> 16.11.2026 · Software Persona Yapay Zeka Mesleki Gelişim Programı</div>
+    <div><b>Proje türü:</b> Makine öğrenmesi + derin öğrenme (ikili sınıflandırma)</div>
+    <div><b>Araçlar:</b> Python, pandas, scikit-learn, PyTorch, Matplotlib</div>
+    <div style="grid-column: span 2"><b>Colab not defteri:</b> <a href="https://colab.research.google.com/github/FatihOkur/Software-Persona-Projects/blob/main/04-Makine-ve-Derin-Ogrenme/kestirimci_bakim.ipynb">colab.research.google.com/github/FatihOkur/Software-Persona-Projects/blob/main/04-Makine-ve-Derin-Ogrenme/kestirimci_bakim.ipynb</a></div>
+    <div style="grid-column: span 2"><b>GitHub:</b> <a href="https://github.com/FatihOkur/Software-Persona-Projects/tree/main/04-Makine-ve-Derin-Ogrenme">github.com/FatihOkur/Software-Persona-Projects/tree/main/04-Makine-ve-Derin-Ogrenme</a></div>
+    <div style="grid-column: span 2"><b>Veri seti:</b> AI4I 2020 Predictive Maintenance Dataset, UCI Machine Learning Repository (CC BY 4.0) — <a href="https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset">archive.ics.uci.edu/dataset/601</a></div>
+  </div>
+</div>
+
+<h2>1. Problem Tanımı</h2>
+<p>Üretim hatlarında ve havacılık bakımında plansız arızalar; üretim kaybına, yüksek onarım maliyetine ve güvenlik riskine yol açar. Bu projenin amacı, bir freze tezgâhının <b>sensör ölçümlerinden</b> (ortam ve işlem sıcaklığı, dönüş hızı, tork, takım aşınması, ürün kalite tipi) makinenin <b>arızalanıp arızalanmayacağını</b> tahmin eden bir model geliştirmektir. Girdi 6 ham ölçümdür; hedef çıktı <code>Machine failure</code> (1 = arıza, 0 = normal) etiketidir. Gerçek dünyada amaç bakımı arızadan <i>önce</i> planlamaktır. Kaçırılan bir arıza, gereksiz bir kontrolden çok daha pahalı olduğu için <b>recall (arızaları yakalama oranı)</b> en kritik metrik olarak belirlenmiştir.</p>
+
+<h2>2. Veri Seti</h2>
+<p>AI4I 2020, gerçek kestirimci bakım verisini yansıtacak şekilde hazırlanmış, açık lisanslı (CC BY 4.0) <b>sentetik</b> bir veri setidir. <b>10.000 örnek ve 14 sütun</b> içerir; eksik değer ve tekrar eden satır yoktur.</p>
+<table>
+  <tr><th>Değişken</th><th>Tip</th><th>Açıklama</th></tr>
+  <tr><td>Type</td><td>kategorik</td><td>Ürün kalite varyantı: L (düşük, %50), M (orta, %30), H (yüksek, %20)</td></tr>
+  <tr><td>Air / Process temperature [K]</td><td>sayısal</td><td>Ortam ve işlem sıcaklığı</td></tr>
+  <tr><td>Rotational speed [rpm], Torque [Nm]</td><td>sayısal</td><td>Mil dönüş hızı ve tork</td></tr>
+  <tr><td>Tool wear [min]</td><td>sayısal</td><td>Takım aşınma süresi</td></tr>
+  <tr><td><b>Machine failure</b></td><td>hedef (0/1)</td><td>Makine arızası — <b>339 arıza / 10.000 (%3,39)</b> → ciddi sınıf dengesizliği</td></tr>
+  <tr><td>TWF, HDF, PWF, OSF, RNF</td><td>0/1</td><td>Arıza modları: takım aşınması (46), ısı dağılımı (115), güç (95), aşırı zorlanma (98), rastgele (19)</td></tr>
+</table>
+<div class="box warn"><b>Veri sızıntısı önlemi:</b> Arıza modu sütunları arızanın nedenini doğrudan söyler ve tahmin anında bilinemez. Bu yüzden modele girdi olarak <b>verilmedi</b>, yalnızca hata analizinde kullanıldı. <code>UDI</code> ve <code>Product ID</code> kimlik sütunları çıkarıldı.</div>
+
+<h2>3. Veri Analizi ve Ön İşleme</h2>
+<div class="row">
+  <div class="fig"><img src="../grafikler/1_sinif_dagilimi.png"><div class="cap">Şekil 1 — Sınıf dağılımı ve arıza modları</div></div>
+  <div class="fig"><img src="../grafikler/2_tork_hiz.png"><div class="cap">Şekil 2 — Dönüş hızı ve torka göre arızalar</div></div>
+</div>
+<div class="fig"><img src="../grafikler/3_kutu_grafikleri.png" style="max-width:96%"><div class="cap">Şekil 3 — Normal ve arızalı makinelerde özellik dağılımları</div></div>
+<div class="row">
+  <div>
+    <h3>Gözlemler</h3>
+    <ul>
+      <li><b>Sınıf dengesizliği:</b> Örneklerin yalnızca %3,39'u arıza. "Hep normal" diyen bir model bile %96,6 accuracy alır; bu yüzden accuracy tek başına <b>yanıltıcıdır</b>.</li>
+      <li><b>Tork ve hız:</b> Dönüş hızı ile tork güçlü negatif ilişkili (r = −0,88). Arızalar iki uçta toplanıyor: <i>yüksek tork ve düşük hız</i> (aşırı zorlanma, ısı) ile <i>çok yüksek hız ve düşük tork</i> (güç arızası). İlişki doğrusal değil.</li>
+      <li><b>Takım aşınması:</b> Medyan aşınma, arızalı makinelerde 165 dk, normallerde 107 dk. 200 dk üzerinde arıza oranı <b>%15,5</b>, altında ise %2,4.</li>
+      <li><b>Ürün tipi:</b> Arıza oranı L tipinde %3,92, M'de %2,77, H'de %2,09.</li>
+      <li><b>Sıcaklık:</b> Ortam ve işlem sıcaklığı tek başına zayıf ayırıcı. Ancak aradaki <i>fark</i> ısı dağılımı arızasıyla ilişkili.</li>
+    </ul>
+  </div>
+  <div class="fig"><img src="../grafikler/4_korelasyon.png" style="max-width:88%"><div class="cap">Şekil 4 — Korelasyon matrisi</div></div>
+</div>
+<h3>Uygulanan ön işleme adımları</h3>
+<table>
+  <tr><th>Adım</th><th>Uygulama</th><th>Gerekçe</th></tr>
+  <tr><td>Eksik / aykırı değer</td><td>Kontrol edildi: eksik değer ve tekrar eden satır yok. Aykırı değerler fiziksel olarak anlamlı olduğu için korundu.</td><td>Yüksek tork veya aşınma, arızanın sinyalidir; silinirse bilgi kaybolur</td></tr>
+  <tr><td>Özellik mühendisliği</td><td><b>Sıcaklık farkı</b> (işlem − ortam), <b>Güç</b> = tork × hız × 2π/60 [W], <b>Zorlanma</b> = aşınma × tork</td><td>Arıza mekanizmalarının fiziksel karşılıkları (ısı, güç, aşırı zorlanma)</td></tr>
+  <tr><td>Encoding</td><td><code>Type</code> → one-hot (Tip_L, Tip_M, Tip_H)</td><td>Kategoriler arasında sıralı büyüklük varsayımından kaçınmak</td></tr>
+  <tr><td>Veri bölme</td><td>Stratified %70 eğitim (7.000) / %15 doğrulama (1.500) / %15 test (1.500); her kümede arıza oranı %3,4</td><td>Model ve eşik seçimi doğrulama kümesinde; test yalnızca en sonda</td></tr>
+  <tr><td>Ölçekleme</td><td><code>StandardScaler</code> yalnızca eğitim kümesine fit edildi (LR ve MLP için)</td><td>Test bilgisinin modele sızmasını önlemek</td></tr>
+  <tr><td>Dengesizlik</td><td><code>class_weight="balanced"</code> (LR, RF) ve <code>pos_weight</code> ≈ 28,5 (MLP)</td><td>Azınlık sınıfın (arıza) hatasını daha ağır cezalandırmak</td></tr>
+</table>
+
+<h2>4. Model Seçimi ve Tasarımı</h2>
+<table>
+  <tr><th>Model</th><th>Rolü</th><th>Temel hiperparametreler / mimari</th></tr>
+  <tr><td>Lojistik Regresyon</td><td>Temel (baseline) model: doğrusal, yorumlanabilir</td><td>class_weight=balanced, max_iter=2000</td></tr>
+  <tr><td>Random Forest</td><td>Doğrusal olmayan ilişkileri ve etkileşimleri yakalar; tablo verisinde güçlü</td><td>300 ağaç, class_weight=balanced_subsample. <b>GridSearchCV</b> (5 katlı stratified, F1) ile max_depth ∈ {8, 12, None} ve min_samples_leaf ∈ {1, 3, 5} arandı → <b>max_depth=12, min_samples_leaf=3</b> (CV F1 = 0,860)</td></tr>
+  <tr><td>MLP (PyTorch)</td><td>Derin öğrenme yaklaşımı</td><td>Girdi 11 → Dense 64 (ReLU, Dropout 0,2) → Dense 32 (ReLU, Dropout 0,2) → Dense 1. Loss: <b>BCEWithLogitsLoss(pos_weight)</b>. Optimizer: <b>Adam</b> (lr = 0,001, weight decay = 1e-4)</td></tr>
+</table>
+
+<h2>5. Eğitim Süreci</h2>
+<div class="row">
+  <div>
+    <p><b>Makine öğrenmesi:</b> LR doğrudan eğitim kümesinde eğitildi. RF'nin hiperparametreleri eğitim kümesinde 5 katlı çapraz doğrulama ile seçildi (9 kombinasyon × 5 kat).</p>
+    <p><b>Derin öğrenme:</b> MLP en fazla 150 epoch, <b>batch size 128</b> ile eğitildi. Her epoch sonunda doğrulama PR-AUC'si izlendi; 20 epoch boyunca iyileşme olmazsa <b>erken durdurma</b> uygulandı ve en iyi ağırlıklar geri yüklendi. Eğitim 116. epoch'ta durdu; en iyi model 96. epoch'ta elde edildi (doğrulama PR-AUC 0,707).</p>
+    <p><b>Karar eşiği:</b> Dengesiz veride varsayılan 0,5 eşiği en iyi seçim değildir. Her modelin eşiği, <b>doğrulama kümesinde F1'i en yüksek yapan</b> değere ayarlandı: LR 0,857 · RF 0,639 · MLP 0,957.</p>
+  </div>
+  <div class="fig"><img src="../grafikler/5_mlp_egitim.png"><div class="cap">Şekil 5 — MLP eğitim/doğrulama loss ve doğrulama metrikleri</div></div>
+</div>
+
+<h2>6. Değerlendirme Sonuçları (test kümesi, 1.500 örnek, 51 arıza)</h2>
+<table>
+  <tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>ROC-AUC</th><th>PR-AUC</th></tr>
+  <tr><td>Lojistik Regresyon</td><td>0,954</td><td>0,382</td><td>0,569</td><td>0,457</td><td>0,948</td><td>0,461</td></tr>
+  <tr class="best"><td>Random Forest ★</td><td>0,995</td><td>0,978</td><td>0,863</td><td>0,917</td><td>0,989</td><td>0,939</td></tr>
+  <tr><td>MLP (PyTorch)</td><td>0,980</td><td>0,744</td><td>0,627</td><td>0,681</td><td>0,978</td><td>0,779</td></tr>
+</table>
+<div class="fig"><img src="../grafikler/6_karmasiklik.png" style="max-width:92%"><div class="cap">Şekil 6 — Karmaşıklık matrisleri (test). RF: 51 arızanın 44'ünü yakaladı, yalnızca 1 yanlış alarm verdi.</div></div>
+<div class="row">
+  <div class="fig"><img src="../grafikler/7_roc_pr.png"><div class="cap">Şekil 7 — ROC ve Precision–Recall eğrileri</div></div>
+  <div class="fig"><img src="../grafikler/8_ozellik_onemi.png"><div class="cap">Şekil 8 — RF özellik önemi (turuncu: türetilen özellikler)</div></div>
+</div>
+<h3>Ablasyon: özellik mühendisliğinin etkisi (Random Forest, test)</h3>
+<table>
+  <tr><th>Özellik seti</th><th>Precision</th><th>Recall</th><th>F1</th><th>PR-AUC</th></tr>
+  <tr><td>Yalnızca ham özellikler</td><td>0,712</td><td>0,725</td><td>0,718</td><td>0,760</td></tr>
+  <tr class="best"><td>Ham + türetilen (sıcaklık farkı, güç, zorlanma)</td><td>0,978</td><td>0,863</td><td>0,917</td><td>0,939</td></tr>
+</table>
+
+<h2>7. Sonuçların Yorumlanması</h2>
+<ul>
+  <li><b>Accuracy yanıltıcı:</b> Üç modelin accuracy değeri %95'in üzerinde. Ancak "hep normal" diyen model bile %96,6 alır. Gerçek fark F1, recall ve PR-AUC'de görülüyor: LR'nin F1 değeri 0,457, RF'nin 0,917.</li>
+  <li><b>Random Forest en iyisi:</b> Arızalar, tork–hız düzleminde iki uçta ve eşik benzeri kurallarla oluşuyor (ör. güç belirli bir aralığın dışına çıkınca). Ağaç tabanlı modeller bu <i>doğrusal olmayan, eşikli</i> yapıyı doğal olarak öğreniyor; LR ise tek bir doğrusal sınır çizmeye çalıştığı için zorlanıyor.</li>
+  <li><b>MLP neden RF'nin gerisinde?</b> Yaklaşık 7.000 satırlık, 11 özellikli tablo verisinde, yalnızca 237 pozitif örnekle derin ağın genelleme avantajı sınırlı kalıyor. Ağaç modelleri bu tür veride genellikle daha veri verimli. MLP yine de LR'den belirgin şekilde iyi (PR-AUC 0,779'a karşı 0,461), yani doğrusal olmayan ilişkileri kısmen öğrenmiş.</li>
+  <li><b>Alan bilgisi kazandırıyor:</b> Fiziksel anlamı olan üç türetilmiş özellik, RF'nin F1 değerini 0,718'den <b>0,917</b>'ye, PR-AUC değerini 0,760'tan 0,939'a çıkardı. Güç ve zorlanma, en önemli özellikler arasında 2. ve 5. sırada.</li>
+</ul>
+
+<h2>8. Hata Analizi</h2>
+<div class="row">
+  <div>
+    <table>
+      <tr><th>Arıza modu (test)</th><th>Arıza</th><th>Yakalanan</th><th>Oran</th></tr>
+      <tr><td>Güç (PWF)</td><td>11</td><td>11</td><td>%100</td></tr>
+      <tr><td>Aşırı zorlanma (OSF)</td><td>15</td><td>15</td><td>%100</td></tr>
+      <tr><td>Isı dağılımı (HDF)</td><td>21</td><td>19</td><td>%90,5</td></tr>
+      <tr><td><b>Takım aşınması (TWF)</b></td><td>5</td><td>1</td><td><b>%20</b></td></tr>
+    </table>
+    <p style="font-size:8.6pt" class="cap">Bir örnek birden fazla modda işaretli olabildiği için toplamlar 51'i aşabilir.</p>
+  </div>
+  <div>
+    <p><b>Kaçırılan 7 arıza (yanlış negatif):</b></p>
+    <ul>
+      <li><b>4'ü takım aşınması (TWF):</b> Aşınma 198–235 dk aralığında ve tork normal. Veri setinde TWF, belirli bir aşınma aralığında <i>rastgele</i> tetiklenir. Ölçümlerde ayırt edici bir iz bırakmadığı için öngörülebilirliği düşüktür.</li>
+      <li><b>2'si ısı dağılımı (HDF):</b> Olasılıkları 0,57 ve 0,61, yani eşiğin (0,64) hemen altında; sınırda örnekler.</li>
+      <li><b>1'inin hiçbir arıza modu yok:</b> Etiket gürültüsü olarak değerlendirildi.</li>
+    </ul>
+    <p><b>Tek yanlış alarm:</b> Düşük hız (1.296 rpm), yüksek tork (58 Nm) ve 204 dk aşınma ile riskli bölgede. Pratikte bu makinenin kontrol edilmesi zaten mantıklı.</p>
+  </div>
+</div>
+
+<h2>9. Sonuç ve Geliştirme Önerileri</h2>
+<p>Random Forest modeli, dengesiz bir veri setinde arızaların <b>%86'sını</b> yakaladı ve 1.449 normal makineden yalnızca birine yanlış alarm verdi (precision %97,8). Bu performans, bakım ekibinin sınırlı kaynağını gerçekten riskli makinelere yönlendirebilecek düzeyde. Projenin en önemli dersleri: dengesiz veride doğru metrik seçimi (accuracy değil F1, recall ve PR-AUC), veri sızıntısından kaçınma ve alan bilgisine dayalı özellik mühendisliğinin model karmaşıklığından daha fazla kazandırabilmesi.</p>
+<p><b>Güçlü yönler:</b> Yüksek precision, açıklanabilir özellik önemleri, sızıntısız ve tekrarlanabilir değerlendirme (sabit seed). <b>Zayıf yönler:</b> Takım aşınması arızalarını yakalayamıyor. Veri sentetik olduğundan gerçek tezgâhlarda yeniden doğrulanmalı. Test kümesinde yalnızca 51 arıza var, yani metriklerin belirsizliği yüksek.</p>
+<p><b>Geliştirme önerileri:</b> (1) Bakım ekibinin kaçırılan arıza ve yanlış alarm maliyetlerine göre eşiği ayarlamak (ör. recall ≥ %95 hedefi). (2) TWF için aşınma süresine dayalı ayrı bir kural veya model. (3) XGBoost/LightGBM ve SMOTE ile dengesizlik denemeleri. (4) Zaman serisi sensör verisi elde edilirse LSTM/GRU ile kalan ömür (RUL) tahmini. (5) Olasılık kalibrasyonu ve SHAP ile tekil tahmin açıklamaları.</p>
+
+<h3>Teslim öncesi kontrol listesi</h3>
+<ul class="chk">
+  <li>☑ Problemimi açık biçimde tanımladım.</li>
+  <li>☑ Veri kaynağını belirttim (UCI, CC BY 4.0).</li>
+  <li>☑ Veriyi inceledim ve 4 görselleştirme kullandım.</li>
+  <li>☑ Gerekli ön işleme adımlarını açıkladım.</li>
+  <li>☑ Model seçimimi gerekçelendirdim.</li>
+  <li>☑ Uygun metriklerle değerlendirme yaptım.</li>
+  <li>☑ Sonuçları yorumladım ve hata analizi yaptım.</li>
+  <li>☑ Kod ve not defteri bağlantılarını ekledim.</li>
+</ul>
+</body>
+</html>

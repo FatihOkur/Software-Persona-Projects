@@ -1,0 +1,50 @@
+name: GitHub Pages'e yayınla
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: 02-Web-Gelistirme-Yapay-Zeka/package-lock.json
+      - name: SkyTrack derle
+        working-directory: 02-Web-Gelistirme-Yapay-Zeka
+        run: |
+          npm ci
+          npm run build
+      - name: Site klasörünü hazırla
+        run: |
+          mkdir -p _site
+          cp site/index.html _site/
+          cp -r 02-Web-Gelistirme-Yapay-Zeka/dist _site/skytrack
+          cp -r 03-Yapay-Zeka-ile-Icerik-Uretimi/sunum _site/icerik
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
